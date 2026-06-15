@@ -1,34 +1,31 @@
+# Code Projects
 
-$$
-\mathbf{H}^{(l+1)} = \sigma\left(\tilde{\mathbf{D}}^{-\frac{1}{2}} \tilde{\mathbf{A}} \tilde{\mathbf{D}}^{-\frac{1}{2}} \mathbf{H}^{(l)} \mathbf{W}^{(l)}\right)
-$$
+This directory contains small graph neural network baselines and helper utilities used while studying federated graph learning papers.
 
+## Baselines
 
-$$
-\mathbf{H} = \left(\tilde{\mathbf{D}}^{-\frac{1}{2}} \tilde{\mathbf{A}} \tilde{\mathbf{D}}^{-\frac{1}{2}}\right)^{K} \mathbf{X} \mathbf{W}
-$$
+- `GCN/`: Graph Convolutional Network baseline.
+- `GAT/`: Graph Attention Network baseline.
+- `SGC/`: Simplified Graph Convolution baseline.
 
-$w_{t+1}$ ← $∑_{k∈S_t} (n_k/n) w_{t+1}^k$
+Each baseline keeps its own `train.py`, model definition, data loader, and result notes. Run experiments from the corresponding baseline directory so relative paths resolve as expected.
 
+## Data
 
+Planetoid-style data can be downloaded with:
 
-算法核心流程
-text
+```bash
+python download_planetoid_data.py
+```
 
-服务器执行：
-初始化全局模型 $w_0$  
-for 每轮通信 t = 1, 2, ... do  
-      随机选择一部分客户端 $S_t$  
-      向每个客户端发送当前全局模型 $w_t$  
-      并行执行：  
-          for 每个客户端 k ∈ $S_t$ do  
-              $w_{t+1}^k$ ← ClientUpdate(k, $w_t$)  
-      服务器聚合：$w_{t+1}$ ← $∑_{k∈S_t} (n_k/n) w_{t+1}^k$
+The downloaded files are cached under `data/`.
 
+## Development Check
 
-客户端 k 执行：  
-输入：全局模型 w，本地数据 $D_k$  
-本地模型初始化：$w_k$ ← w  
-for 多个本地epoch do  
-    在本地数据 $D_k$ 上执行SGD更新  
-return $w_k$ 给服务器
+From the repository root:
+
+```bash
+python -m compileall code_projects
+```
+
+This check verifies that the Python sources are syntactically valid without requiring a full training run.

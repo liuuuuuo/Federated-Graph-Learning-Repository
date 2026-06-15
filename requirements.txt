@@ -1,0 +1,8 @@
+numpy
+scipy
+torch
+torchvision
+networkx
+matplotlib
+Pillow
+pdf2image
